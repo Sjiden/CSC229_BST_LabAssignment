@@ -55,30 +55,96 @@ public class BinarySearchTree {
     }
 
     private void doInOrder(BstNode root) {
-
         // ToDo 1: complete InOrder Traversal 
+        if (root == null) {
+            return;
+        }
+        doInOrder(root.getLeft());
+        System.out.println(root.getData());
+        doInOrder(root.getRight());
     }
-        public void preOrderTraversal() {
+
+    public void preOrderTraversal() {
         doPreOrder(this.root);
-        // ToDo 2: complete the pre-order travesal . 
+        // ToDo 2: complete the pre-order travesal.
+        }
+    
+    private void doPreOrder(BstNode node) {
+        if (node == null) return;
+        System.out.println(node.getData());
+        doPreOrder(node.getLeft());
+        doPreOrder(node.getRight());
     }
 
-    public Integer findHeight() {
-
-        // ToDo 3: Find the height of a tree
+ // ToDo 3: Find the height of a tree
+    
+     public Integer findHeight() {
+        return getHeight(this.root);
     }
 
+    private Integer getHeight(BstNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int left = getHeight(node.getLeft());
+        int right = getHeight(node.getRight());
+
+        int height;
+        if (left > right) {
+            height = left;
+        } else {
+            height = right;
+        }
+        return height + 1;
+    }
+    
     
 
-    public int getDepth(BstNode node) {
-        //ToDo 4: complete getDepth of a node 
+     public int getDepth(int num) {
+        BstNode current = root;
+        int depth = 0;
+
+        while (current != null) {
+            if (num == current.getData()) {
+                return depth;
+            } else if (num < current.getData()) {
+                current = current.getLeft();
+            } else {
+                current = current.getRight();
+            }
+            depth++;
+        }
+
+        return depth;
     }
-    
+     
    public void print() {
        System.out.println("\n==== BST Print ===== \n");
         print("", root, false);
-        // ToDo 5: complete the print of the BST
     }
+   
+   private void print(String moreOrLess, BstNode node, boolean leftOrRight) {
+    if (node != null) {
+        String right;
+        String left;
+        String currentNode;
 
+        if (leftOrRight) {
+            right = moreOrLess + "|-- ";
+            left = moreOrLess + "|   ";
+            currentNode = moreOrLess + "|-- ";
+        } else {
+            right = moreOrLess + "|++ ";
+            left = moreOrLess + "    ";
+            currentNode = moreOrLess + "|++ ";
+        }
+
+        print(right, node.getRight(), false);
+        System.out.println(currentNode + node.getData());
+        print(left, node.getLeft(), true);
+    }
+  }
+   
 
 }
